@@ -1,0 +1,26 @@
+{
+  "name": "RedirectMe",
+  "version": "0.0.0",
+  "description": "Redirect request with regex or glob pattern like",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "./popup.html"
+  },
+  "background": {
+  },
+  "permissions": [
+    "webRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+R",
+        "mac": "MacCtrl+Shift+R"
+      },
+      "description": "Opens 'RedirectMe' popup.html"
+    }
+  }
+}
