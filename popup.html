@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Redirect Me</title>
+        <link rel="stylesheet" href="popup.css">
+    </head>
+    <body>
+        <div class="app">
+            <div class="sources">
+                <div class="source">
+                    <div class="toggle">
+                        <input type="checkbox">
+                    </div>
+
+                    <div class="panel">
+                        <div class="left">
+                            <div class="from">
+                                <label for="from">From:</label>
+                                <br>
+                                <input type="text" id="from" placeholder="Base Source">
+                            </div>
+
+                            <div class="to">
+                                <label for="to">To:</label>
+                                <br>
+                                <input type="text" id="to" placeholder="Destination Source">
+                            </div>
+                        </div>
+
+                        <div class="right">
+                            <div class="tooltip duplicate-icon">
+                                <img
+                                    src="/assets//duplicate-icon.png"
+                                    alt="duplicate icon"
+                                >
+                                <span class="tooltiptext">Duplicate this source</span>
+                            </div>
+
+                            <div class="tooltip recycle-bin-icon">
+                                <img
+                                    src="/assets/recycle-bin-icon.png"
+                                    alt="recycle bin"
+                                >
+                                <span class="tooltiptext">Delete this source</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="add-source">
+                +
+            </div>
+        </div>
+    </body>
+</html>
