@@ -94,15 +94,19 @@
 .add-source {
     border: 1px solid;
     text-align: center;
-}
-
-.add-source {
-    padding: 10px;
+    font-size: 28px;
+    padding: 5px;
     margin-top: 10px;
+    user-select: none;
 }
 
 .add-source:hover {
     cursor: pointer;
+}
+
+.add-source:active {
+  color: white;
+  background-color: #bebebe;
 }
 
 /* }}} */
