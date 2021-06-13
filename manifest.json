@@ -1,7 +1,7 @@
 {
   "name": "RedirectMe",
-  "version": "0.0.0",
-  "description": "Redirect request with regex or glob pattern like",
+  "version": "1.0.0",
+  "description": "Redirect request with ease",
   "manifest_version": 3,
   "action": {
     "default_popup": "./popup.html"
