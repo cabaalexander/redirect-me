@@ -5,8 +5,6 @@ const sources = document.querySelector('.sources')
 addSourceButton.addEventListener('click', () => createSource())
 
 // {{{ initialize
-
-// initialize sources storage
 chrome.storage.sync.get('sources', (sources) => {
   if (Object.keys(sources).length !== 0) return
   chrome.storage.sync.set({sources: {}})
@@ -20,16 +18,14 @@ chrome.storage.sync.get(({sources}) => {
       createSource(key, value)
     })
 })
-
 // }}}
 
+// {{{ create source
 function createSource(sourceKey, payload={}) {
   const newId = () => `source-${uuidv4()}`
   const id = sourceKey || newId()
 
-  // {{{ initial source state
-
-  // set source's state
+  // {{{ initialize source data
   storageSet((state) => merge(
     state,
     {
@@ -45,18 +41,15 @@ function createSource(sourceKey, payload={}) {
     }
   ))
 
-  // }}}
-
   const sourceDOM = createHtml(sourceTemplate, {
     id,
     from: payload.from,
     to: payload.to,
     active: payload.active ? 'checked' : '',
   })
+  // }}}
 
-  // {{{ handlers
-
-  // delete handler
+  // {{{ delete handler
   sourceDOM.querySelector('.recycle-bin-icon').addEventListener('click', () => {
     // remove DOM element
     document.querySelector(`.${id}`).remove()
@@ -66,10 +59,12 @@ function createSource(sourceKey, payload={}) {
       return state
     })
   })
+  // }}}
 
-  // inputs handler
-  const inputHandler = (type) => (e) => {
-    const {value} = e.target
+  // {{{ inputs handler
+  const inputHandler = ({target}) => {
+    const {value} = target
+    const {type} = target.dataset
     storageSet((state) => merge(
       state,
       {
@@ -79,13 +74,12 @@ function createSource(sourceKey, payload={}) {
       }
     ))
   }
-  sourceDOM.querySelector('.from input')
-    .addEventListener('keyup', inputHandler('from'))
-  sourceDOM.querySelector('.to input')
-    .addEventListener('keyup', inputHandler('to'))
+  sourceDOM.querySelector('.from input').addEventListener('keyup', inputHandler)
+  sourceDOM.querySelector('.to input').addEventListener('keyup', inputHandler)
+  // }}}
 
-  // checkbox handler
-  sourceDOM.querySelector('.source .toggle')
+  // {{{ checkbox handler
+  sourceDOM.querySelector('.source .toggle input')
     .addEventListener('click', () => {
       storageSet((state) => merge(
         state,
@@ -98,8 +92,9 @@ function createSource(sourceKey, payload={}) {
         }
       ))
     })
+  // }}}
 
-  // duplicate handler
+  // {{{ duplicate handler
   sourceDOM.querySelector('.duplicate-icon')
     .addEventListener('click', () => {
       chrome.storage.sync.get(({sources}) => {
@@ -110,14 +105,14 @@ function createSource(sourceKey, payload={}) {
         })
       })
     })
-
   // }}}
 
+  // set created source into the DOM
   sources.appendChild(sourceDOM)
 }
+// }}}
 
 // {{{ utils
-
 function merge(firstObj, secondObj) {
   // copy objects to prevent any modifications by reference
   const baseObj = {...firstObj}
@@ -168,11 +163,9 @@ function createHtml (stringHTML, data) {
   temp.innerHTML = stringHTML.replace(/{(.+)}/g, (_, key) => data[key] || '')
   return temp.content
 }
-
 // }}}
 
 // {{{ template
-
 const sourceTemplate = `
   <div class="source {id}">
     <div class="toggle">
@@ -189,6 +182,7 @@ const sourceTemplate = `
             id="from"
             placeholder="Base Source"
             value="{from}"
+            data-type="from"
           >
         </div>
 
@@ -200,6 +194,7 @@ const sourceTemplate = `
             id="to"
             placeholder="Destination Source"
             value="{to}"
+            data-type="to"
           >
         </div>
       </div>
@@ -226,5 +221,4 @@ const sourceTemplate = `
     </div>
   </div>
 `
-
 // }}}
