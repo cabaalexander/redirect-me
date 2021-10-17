@@ -18,7 +18,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
 // }}}
 
 // {{{ redirect sources
-async function redirectSources(sources) {
+async function redirectSources(sources={}) {
   const rules = await getDynamicRules()
   const rulesId = rules.map(r => r.id)
 
