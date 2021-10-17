@@ -1,27 +1,28 @@
-// {{{ init storage
-
+// {{{ extension installed
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('RedirectMe - Extension Started')
-
-  chrome.storage.sync.get(({sources}) => {
-    redirectSources(sources)
-  })
-
-  chrome.storage.onChanged.addListener((changes, area) => {
-    const newData = changes.sources?.newValue
-    if (area === 'sync' && newData) {
-      redirectSources(newData)
-    }
-  })
+  console.log('RedirectMe - Extension Installed')
 })
-
 // }}}
 
+// {{{ listen for storage changes
+chrome.storage.sync.get(({sources}) => {
+  redirectSources(sources)
+})
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  const newData = changes.sources?.newValue
+  if (area === 'sync' && newData) {
+    redirectSources(newData)
+  }
+})
+// }}}
+
+// {{{ redirect sources
 async function redirectSources(sources) {
   const rules = await getDynamicRules()
   const rulesId = rules.map(r => r.id)
 
-  removeRules(rulesId)
+  await removeRules(rulesId)
 
   const newRules = Object.entries(sources)
     .filter(activeSources)
@@ -39,21 +40,31 @@ async function redirectSources(sources) {
       }
     }))
 
-  addRules(newRules)
+  await addRules(newRules)
 }
+// }}}
 
 // {{{ utils
+function activeSources([_, sourceData]) {
+  return sourceData.active && (sourceData.from !== '' && sourceData.to !== '')
+}
 
 function addRules(rules=[]) {
-  chrome.declarativeNetRequest.updateDynamicRules({addRules: rules})
+  return new Promise((accept) => {
+    chrome.declarativeNetRequest.updateDynamicRules(
+      {addRules: rules},
+      () => accept(),
+    )
+  })
 }
 
 function removeRules(ids=[]) {
-  chrome.declarativeNetRequest.updateDynamicRules({removeRuleIds: ids})
-}
-
-function activeSources([_, sourceData]) {
-  return sourceData.active && (sourceData.from !== '' && sourceData.to !== '')
+  return new Promise((accept) => {
+    chrome.declarativeNetRequest.updateDynamicRules(
+      {removeRuleIds: ids},
+      () => accept(),
+    )
+  })
 }
 
 function getDynamicRules() {
@@ -63,5 +74,4 @@ function getDynamicRules() {
     })
   })
 }
-
 // }}}
