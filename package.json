@@ -1,0 +1,29 @@
+{
+  "source": [
+    "./src/popup.html"
+  ],
+  "scripts": {
+    "dev": "parcel",
+    "build": "parcel build --no-content-hash",
+    "build:ext": "./build-ext"
+  },
+  "name": "redirect-me",
+  "version": "0.0.0",
+  "description": "Chrome Extension to do internal redirects",
+  "repository": "git@github.com:cabaalexander/redirect-me.git",
+  "author": "cabaalexander <cabaalexander321@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.0",
+    "parcel": "^2.8.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "2.8.0",
+    "process": "^0.11.10"
+  }
+}

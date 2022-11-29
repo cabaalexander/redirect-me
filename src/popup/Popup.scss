@@ -1,6 +1,6 @@
 /* {{{ app */
 
-.app {
+#app {
     width: 400px;
 }
 
@@ -18,9 +18,9 @@
 
 /* }}} */
 
-/* {{{ toggle */
+/* {{{ check */
 
-.toggle {
+.check {
     display: flex;
     align-items: center;
     margin-right: 10px;
@@ -92,6 +92,8 @@
 /* {{{ add-source */
 
 .add-source {
+    background-color: transparent;
+    width: 100%;
     border: 1px solid;
     text-align: center;
     font-size: 28px;

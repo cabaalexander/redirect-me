@@ -1,14 +1,20 @@
 {
   "name": "RedirectMe",
   "version": "1.1.0",
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
   "description": "Redirect request with ease",
-  "manifest_version": 3,
   "action": {
     "default_popup": "./popup.html"
   },
   "background": {
     "service_worker": "./background.js"
   },
+  "manifest_version": 3,
   "permissions": [
     "storage",
     "declarativeNetRequest"

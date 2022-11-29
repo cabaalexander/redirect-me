@@ -1,2 +1,5 @@
-# ignore extension store artifact
 redirect-me.zip
+node_modules
+.parcel-cache
+build*
+dist*

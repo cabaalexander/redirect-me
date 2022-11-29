@@ -11,7 +11,7 @@ chrome.storage.sync.get('sources', (sources) => {
 })
 
 // load DOM items in the order they were created
-chrome.storage.sync.get(({sources}) => {
+chrome.storage.sync.get(({sources={}}) => {
   Object.entries(sources)
     .sort(([_a, a], [_b, b]) => a.created - b.created)
     .forEach(([key, value]) => {
@@ -79,7 +79,7 @@ function createSource(sourceKey, payload={}) {
   // }}}
 
   // {{{ checkbox handler
-  sourceDOM.querySelector('.source .toggle input')
+  sourceDOM.querySelector('.source .check input')
     .addEventListener('click', () => {
       storageSet((state) => merge(
         state,
@@ -168,7 +168,7 @@ function createHtml (stringHTML, data) {
 // {{{ template
 const sourceTemplate = `
   <div class="source {id}">
-    <div class="toggle">
+    <div class="check">
       <input type="checkbox" {active}>
     </div>
 
